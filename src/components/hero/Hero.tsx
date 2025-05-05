@@ -2,15 +2,8 @@
 import React from "react";
 import HeroFeature from "./HeroFeature";
 import Logo from "../Logo";
-import { useNavigate } from "react-router-dom";
 
 const Hero: React.FC = () => {
-  const navigate = useNavigate();
-
-  const handleStartJourneying = () => {
-    navigate("/signup");
-  };
-
   return (
     <section
       className="pt-[42px] pb-[184px] px-20 max-md:pb-[100px] max-md:px-5"
@@ -51,7 +44,6 @@ const Hero: React.FC = () => {
             <button
               className="bg-[rgba(65,105,225,1)] flex min-h-[46px] items-center gap-2 overflow-hidden text-base text-white font-normal justify-center mt-10 px-5 rounded-md"
               aria-label="Start Journaling"
-              onClick={handleStartJourneying}
             >
               <span className="self-stretch my-auto">Start Journaling</span>
               <img
