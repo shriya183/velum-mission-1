@@ -1,10 +1,11 @@
+
 import React from "react";
 import HeroFeature from "./HeroFeature";
 
 const Hero: React.FC = () => {
   return (
     <section
-      className="bg-zinc-900 pt-[42px] pb-[184px] px-20 border-[rgba(68,49,73,1)] border-b max-md:pb-[100px] max-md:px-5"
+      className="pt-[42px] pb-[184px] px-20 max-md:pb-[100px] max-md:px-5"
       aria-labelledby="hero-heading"
     >
       <div className="flex w-full flex-col items-stretch max-md:max-w-full">
