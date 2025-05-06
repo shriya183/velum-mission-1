@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { z } from "zod";
 import { Link, useNavigate } from "react-router-dom";
@@ -20,6 +19,7 @@ import GoogleIcon from "@/components/icons/GoogleIcon";
 import { toast } from "@/components/ui/sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { BeamsBackground } from "@/components/ui/beams-background";
+import Header from "@/components/header/Header";
 
 // Define form schema
 const signUpSchema = z.object({
@@ -81,11 +81,12 @@ const SignUp: React.FC = () => {
 
   return (
     <BeamsBackground intensity="medium" className="min-h-screen">
+      <Header />
       <div className="min-h-screen flex items-center justify-center p-4">
-        <Card className="w-full max-w-md bg-black/20 backdrop-blur-lg border border-white/10">
+        <Card className="w-full max-w-md bg-black/20 backdrop-blur-lg border border-white/10 dark:bg-black/20 dark:backdrop-blur-lg dark:border-white/10 light:bg-white/90 light:backdrop-blur-lg light:border-black/10">
           <CardHeader className="space-y-1">
-            <CardTitle className="text-2xl font-bold text-white">Sign Up</CardTitle>
-            <CardDescription className="text-gray-300">
+            <CardTitle className="text-2xl font-bold text-white dark:text-white light:text-gray-900">Sign Up</CardTitle>
+            <CardDescription className="text-gray-300 dark:text-gray-300 light:text-gray-600">
               Create an account to get started
             </CardDescription>
           </CardHeader>
@@ -174,11 +175,11 @@ const SignUp: React.FC = () => {
             </Button>
           </CardContent>
           <CardFooter>
-            <p className="text-center text-sm text-gray-400 w-full">
+            <p className="text-center text-sm text-gray-400 dark:text-gray-400 light:text-gray-500 w-full">
               Already have an account?{" "}
               <Link
                 to="/login"
-                className="underline underline-offset-4 hover:text-white text-blue-400"
+                className="underline underline-offset-4 hover:text-white text-blue-400 dark:text-blue-400 dark:hover:text-white light:text-blue-600 light:hover:text-blue-800"
               >
                 Log in
               </Link>
