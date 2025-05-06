@@ -19,6 +19,7 @@ import { Eye, EyeOff, Mail, Lock } from "lucide-react";
 import GoogleIcon from "@/components/icons/GoogleIcon";
 import { toast } from "@/components/ui/sonner";
 import { supabase } from "@/integrations/supabase/client";
+import { BeamsBackground } from "@/components/ui/beams-background";
 
 // Define form schema
 const loginSchema = z.object({
@@ -77,113 +78,121 @@ const Login: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-b from-background to-muted/50">
-      <Card className="w-full max-w-md">
-        <CardHeader className="space-y-1">
-          <CardTitle className="text-2xl font-bold">Log In</CardTitle>
-          <CardDescription>Enter your details to access your account</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
-              <div className="relative">
-                <Mail className="absolute left-3 top-2.5 h-5 w-5 text-muted-foreground" />
-                <Input
-                  id="email"
-                  placeholder="you@example.com"
-                  className="pl-10"
-                  {...register("email")}
-                />
+    <BeamsBackground intensity="medium" className="min-h-screen">
+      <div className="min-h-screen flex items-center justify-center p-4">
+        <Card className="w-full max-w-md bg-black/20 backdrop-blur-lg border border-white/10">
+          <CardHeader className="space-y-1">
+            <CardTitle className="text-2xl font-bold text-white">Log In</CardTitle>
+            <CardDescription className="text-gray-300">
+              Enter your details to access your account
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="email" className="text-gray-200">Email</Label>
+                <div className="relative">
+                  <Mail className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" />
+                  <Input
+                    id="email"
+                    placeholder="you@example.com"
+                    className="pl-10 bg-black/30 border-white/10 text-white placeholder:text-gray-500"
+                    {...register("email")}
+                  />
+                </div>
+                {errors.email && (
+                  <p className="text-sm text-red-400 mt-1">
+                    {errors.email.message}
+                  </p>
+                )}
               </div>
-              {errors.email && (
-                <p className="text-sm text-destructive mt-1">
-                  {errors.email.message}
-                </p>
-              )}
-            </div>
 
-            <div className="space-y-2">
-              <div className="flex justify-between">
-                <Label htmlFor="password">Password</Label>
-                <Link
-                  to="/forgot-password"
-                  className="text-sm font-medium text-primary hover:underline"
-                >
-                  Forgot password?
-                </Link>
+              <div className="space-y-2">
+                <div className="flex justify-between">
+                  <Label htmlFor="password" className="text-gray-200">Password</Label>
+                  <Link
+                    to="/forgot-password"
+                    className="text-sm font-medium text-blue-400 hover:underline"
+                  >
+                    Forgot password?
+                  </Link>
+                </div>
+                <div className="relative">
+                  <Lock className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" />
+                  <Input
+                    id="password"
+                    type={showPassword ? "text" : "password"}
+                    className="pl-10 bg-black/30 border-white/10 text-white placeholder:text-gray-500"
+                    {...register("password")}
+                  />
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="icon"
+                    className="absolute right-1 top-1 text-gray-400 hover:text-white"
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
+                    {showPassword ? (
+                      <EyeOff className="h-5 w-5" />
+                    ) : (
+                      <Eye className="h-5 w-5" />
+                    )}
+                    <span className="sr-only">
+                      {showPassword ? "Hide password" : "Show password"}
+                    </span>
+                  </Button>
+                </div>
+                {errors.password && (
+                  <p className="text-sm text-red-400 mt-1">
+                    {errors.password.message}
+                  </p>
+                )}
               </div>
-              <div className="relative">
-                <Lock className="absolute left-3 top-2.5 h-5 w-5 text-muted-foreground" />
-                <Input
-                  id="password"
-                  type={showPassword ? "text" : "password"}
-                  className="pl-10"
-                  {...register("password")}
-                />
-                <Button
-                  type="button"
-                  variant="ghost"
-                  size="icon"
-                  className="absolute right-1 top-1"
-                  onClick={() => setShowPassword(!showPassword)}
-                >
-                  {showPassword ? (
-                    <EyeOff className="h-5 w-5" />
-                  ) : (
-                    <Eye className="h-5 w-5" />
-                  )}
-                  <span className="sr-only">
-                    {showPassword ? "Hide password" : "Show password"}
-                  </span>
-                </Button>
+
+              <Button 
+                type="submit" 
+                className="w-full bg-[rgba(65,105,225,1)] hover:bg-[rgba(65,105,225,0.9)] text-white" 
+                disabled={isLoading}
+              >
+                {isLoading ? "Logging in..." : "Log in"}
+              </Button>
+            </form>
+
+            <div className="relative my-4">
+              <div className="absolute inset-0 flex items-center">
+                <span className="w-full border-t border-white/10" />
               </div>
-              {errors.password && (
-                <p className="text-sm text-destructive mt-1">
-                  {errors.password.message}
-                </p>
-              )}
+              <div className="relative flex justify-center text-xs uppercase">
+                <span className="bg-transparent px-2 text-gray-400">
+                  Or continue with
+                </span>
+              </div>
             </div>
 
-            <Button type="submit" className="w-full" disabled={isLoading}>
-              {isLoading ? "Logging in..." : "Log in"}
-            </Button>
-          </form>
-
-          <div className="relative my-4">
-            <div className="absolute inset-0 flex items-center">
-              <span className="w-full border-t" />
-            </div>
-            <div className="relative flex justify-center text-xs uppercase">
-              <span className="bg-background px-2 text-muted-foreground">
-                Or continue with
-              </span>
-            </div>
-          </div>
-
-          <Button
-            variant="outline"
-            type="button"
-            className="w-full"
-            onClick={handleGoogleLogin}
-          >
-            <GoogleIcon className="mr-2 h-5 w-5" />
-            Log in with Google
-          </Button>
-        </CardContent>
-        <CardFooter>
-          <p className="text-center text-sm text-muted-foreground w-full">
-            Don&apos;t have an account?{" "}
-            <Link
-              to="/signup"
-              className="underline underline-offset-4 hover:text-primary"
+            <Button
+              variant="outline"
+              type="button"
+              className="w-full border-white/10 bg-black/30 text-white hover:bg-white/10"
+              onClick={handleGoogleLogin}
             >
-              Sign up
-            </Link>
-          </p>
-        </CardFooter>
-      </Card>
-    </div>
+              <GoogleIcon className="mr-2 h-5 w-5" />
+              Log in with Google
+            </Button>
+          </CardContent>
+          <CardFooter>
+            <p className="text-center text-sm text-gray-400 w-full">
+              Don&apos;t have an account?{" "}
+              <Link
+                to="/signup"
+                className="underline underline-offset-4 hover:text-white text-blue-400"
+              >
+                Sign up
+              </Link>
+            </p>
+          </CardFooter>
+        </Card>
+      </div>
+    </BeamsBackground>
   );
 };
 
