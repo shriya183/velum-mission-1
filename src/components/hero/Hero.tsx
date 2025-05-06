@@ -1,5 +1,6 @@
 
 import React from "react";
+import { Link } from "react-router-dom";
 import HeroFeature from "./HeroFeature";
 import Logo from "../Logo";
 
@@ -41,17 +42,19 @@ const Hero: React.FC = () => {
                 record — it's a mirror across time.
               </p>
             </div>
-            <button
-              className="bg-[rgba(65,105,225,1)] flex min-h-[46px] items-center gap-2 overflow-hidden text-base text-white font-normal justify-center mt-10 px-5 rounded-md"
-              aria-label="Start Journaling"
-            >
-              <span className="self-stretch my-auto">Start Journaling</span>
-              <img
-                src="https://cdn.builder.io/api/v1/image/assets/TEMP/5b7694f438ce893e99344555ba65aac42a6ea81f?placeholderIfAbsent=true"
-                className="aspect-[1] object-contain w-4 self-stretch shrink-0 my-auto"
-                alt="Arrow icon"
-              />
-            </button>
+            <Link to="/signup">
+              <button
+                className="bg-[rgba(65,105,225,1)] flex min-h-[46px] items-center gap-2 overflow-hidden text-base text-white font-normal justify-center mt-10 px-5 rounded-md"
+                aria-label="Start Journaling"
+              >
+                <span className="self-stretch my-auto">Start Journaling</span>
+                <img
+                  src="https://cdn.builder.io/api/v1/image/assets/TEMP/5b7694f438ce893e99344555ba65aac42a6ea81f?placeholderIfAbsent=true"
+                  className="aspect-[1] object-contain w-4 self-stretch shrink-0 my-auto"
+                  alt="Arrow icon"
+                />
+              </button>
+            </Link>
           </div>
 
           <div className="flex min-w-60 flex-col items-center w-[352px]">
