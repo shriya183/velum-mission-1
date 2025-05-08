@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Link } from "react-router-dom";
 import HeroFeature from "./HeroFeature";
@@ -18,13 +17,6 @@ const Hero: React.FC = () => {
               Velum
             </div>
           </div>
-          <button aria-label="Menu">
-            <img
-              src="https://cdn.builder.io/api/v1/image/assets/TEMP/0cf63750c0e3e96c0db0851197130bf64125af70?placeholderIfAbsent=true"
-              className="aspect-[1] object-contain w-[31px] self-stretch shrink-0 my-auto"
-              alt="Menu icon"
-            />
-          </button>
         </header>
 
         <div className="self-center flex gap-[138px] flex-wrap mt-[106px] max-md:max-w-full max-md:mt-10">
