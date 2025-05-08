@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+
+import React, { useState, useEffect } from "react";
 import { z } from "zod";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -20,6 +21,7 @@ import { toast } from "@/components/ui/sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { BeamsBackground } from "@/components/ui/beams-background";
 import Header from "@/components/header/Header";
+import { cleanupAuthState } from "@/hooks/useSupabaseAuth";
 
 // Define form schema
 const signUpSchema = z.object({
@@ -44,12 +46,34 @@ const SignUp: React.FC = () => {
     resolver: zodResolver(signUpSchema),
   });
 
+  // Check if user is already logged in
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (session) {
+        navigate('/');
+      }
+    });
+  }, [navigate]);
+
   const onSubmit = async (data: SignUpFormValues) => {
     setIsLoading(true);
     try {
+      // Clean up existing state
+      cleanupAuthState();
+      
+      // Attempt global sign out
+      try {
+        await supabase.auth.signOut({ scope: 'global' });
+      } catch (err) {
+        // Continue even if this fails
+      }
+      
       const { error } = await supabase.auth.signUp({
         email: data.email,
         password: data.password,
+        options: {
+          emailRedirectTo: window.location.origin
+        }
       });
 
       if (error) {
@@ -57,7 +81,7 @@ const SignUp: React.FC = () => {
       }
 
       toast.success("Sign-up successful! Please check your email to verify your account.");
-      navigate("/");
+      navigate("/login");
     } catch (error: any) {
       toast.error(error.message || "Failed to sign up.");
     } finally {
@@ -67,8 +91,21 @@ const SignUp: React.FC = () => {
 
   const handleGoogleSignUp = async () => {
     try {
+      // Clean up existing state
+      cleanupAuthState();
+      
+      // Attempt global sign out
+      try {
+        await supabase.auth.signOut({ scope: 'global' });
+      } catch (err) {
+        // Continue even if this fails
+      }
+      
       const { error } = await supabase.auth.signInWithOAuth({
         provider: "google",
+        options: {
+          redirectTo: window.location.origin
+        }
       });
 
       if (error) {

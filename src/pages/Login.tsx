@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+
+import React, { useState, useEffect } from "react";
 import { z } from "zod";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -20,6 +21,7 @@ import { toast } from "@/components/ui/sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { BeamsBackground } from "@/components/ui/beams-background";
 import Header from "@/components/header/Header";
+import { cleanupAuthState } from "@/hooks/useSupabaseAuth";
 
 // Define form schema
 const loginSchema = z.object({
@@ -42,9 +44,28 @@ const Login: React.FC = () => {
     resolver: zodResolver(loginSchema),
   });
 
+  // Check if user is already logged in
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (session) {
+        navigate('/');
+      }
+    });
+  }, [navigate]);
+
   const onSubmit = async (data: LoginFormValues) => {
     setIsLoading(true);
     try {
+      // Clean up existing state
+      cleanupAuthState();
+      
+      // Attempt global sign out
+      try {
+        await supabase.auth.signOut({ scope: 'global' });
+      } catch (err) {
+        // Continue even if this fails
+      }
+      
       const { error } = await supabase.auth.signInWithPassword({
         email: data.email,
         password: data.password,
@@ -55,7 +76,8 @@ const Login: React.FC = () => {
       }
 
       toast.success("Login successful!");
-      navigate("/");
+      // Force page reload
+      window.location.href = '/';
     } catch (error: any) {
       toast.error(error.message || "Failed to log in.");
     } finally {
@@ -65,8 +87,21 @@ const Login: React.FC = () => {
 
   const handleGoogleLogin = async () => {
     try {
+      // Clean up existing state
+      cleanupAuthState();
+      
+      // Attempt global sign out
+      try {
+        await supabase.auth.signOut({ scope: 'global' });
+      } catch (err) {
+        // Continue even if this fails
+      }
+      
       const { error } = await supabase.auth.signInWithOAuth({
         provider: "google",
+        options: {
+          redirectTo: window.location.origin
+        }
       });
 
       if (error) {
