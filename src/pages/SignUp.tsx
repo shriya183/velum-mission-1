@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/card";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { Eye, EyeOff, Mail, Lock } from "lucide-react";
+import { Eye, EyeOff, Mail, Lock, User } from "lucide-react";
 import GoogleIcon from "@/components/icons/GoogleIcon";
 import { toast } from "@/components/ui/sonner";
 import { supabase } from "@/integrations/supabase/client";
@@ -26,6 +26,7 @@ import { cleanupAuthState } from "@/hooks/useSupabaseAuth";
 // Define form schema
 const signUpSchema = z.object({
   email: z.string().email({ message: "Please enter a valid email address" }),
+  username: z.string().min(3, { message: "Username must be at least 3 characters" }).optional(),
   password: z
     .string()
     .min(8, { message: "Password must be at least 8 characters" }),
@@ -68,21 +69,28 @@ const SignUp: React.FC = () => {
         // Continue even if this fails
       }
       
+      console.log("Signing up with:", data.email);
+      
       const { error } = await supabase.auth.signUp({
         email: data.email,
         password: data.password,
         options: {
-          emailRedirectTo: window.location.origin
+          emailRedirectTo: window.location.origin,
+          data: {
+            username: data.username || null
+          }
         }
       });
 
       if (error) {
+        console.error("Signup error:", error);
         throw error;
       }
 
       toast.success("Sign-up successful! Please check your email to verify your account.");
       navigate("/login");
     } catch (error: any) {
+      console.error("Error details:", error);
       toast.error(error.message || "Failed to sign up.");
     } finally {
       setIsLoading(false);
@@ -143,6 +151,24 @@ const SignUp: React.FC = () => {
                 {errors.email && (
                   <p className="text-sm text-red-400 mt-1">
                     {errors.email.message}
+                  </p>
+                )}
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="username" className="text-gray-200">Username (optional)</Label>
+                <div className="relative">
+                  <User className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" />
+                  <Input
+                    id="username"
+                    placeholder="username"
+                    className="pl-10 bg-black/30 border-white/10 text-white placeholder:text-gray-500"
+                    {...register("username")}
+                  />
+                </div>
+                {errors.username && (
+                  <p className="text-sm text-red-400 mt-1">
+                    {errors.username.message}
                   </p>
                 )}
               </div>

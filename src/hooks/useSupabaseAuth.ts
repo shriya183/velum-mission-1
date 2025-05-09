@@ -26,25 +26,69 @@ export const useSupabaseAuth = () => {
   const [user, setUser] = useState<User | null>(null);
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
+  const [profile, setProfile] = useState<any>(null);
 
   useEffect(() => {
     // Set up auth state listener FIRST
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, currentSession) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, currentSession) => {
       setSession(currentSession);
       setUser(currentSession?.user ?? null);
       setLoading(false);
       
       if (event === 'SIGNED_IN') {
         toast.success('Signed in successfully');
+        // Fetch user profile with setTimeout to avoid potential deadlocks
+        if (currentSession?.user) {
+          setTimeout(async () => {
+            try {
+              const { data, error } = await supabase
+                .from('profiles')
+                .select('*')
+                .eq('id', currentSession.user.id)
+                .single();
+              
+              if (error) {
+                console.error('Error fetching profile:', error);
+                return;
+              }
+              
+              setProfile(data);
+            } catch (err) {
+              console.error('Error in profile fetch:', err);
+            }
+          }, 0);
+        }
       } else if (event === 'SIGNED_OUT') {
+        setProfile(null);
         toast.info('Signed out');
       }
     });
     
     // THEN check for existing session
-    supabase.auth.getSession().then(({ data: { session: currentSession } }) => {
+    supabase.auth.getSession().then(async ({ data: { session: currentSession } }) => {
       setSession(currentSession);
       setUser(currentSession?.user ?? null);
+      
+      // Fetch user profile if signed in
+      if (currentSession?.user) {
+        try {
+          const { data, error } = await supabase
+            .from('profiles')
+            .select('*')
+            .eq('id', currentSession.user.id)
+            .single();
+          
+          if (error) {
+            console.error('Error fetching profile:', error);
+            return;
+          }
+          
+          setProfile(data);
+        } catch (err) {
+          console.error('Error in profile fetch:', err);
+        }
+      }
+      
       setLoading(false);
     });
 
@@ -72,10 +116,34 @@ export const useSupabaseAuth = () => {
     }
   };
 
+  const updateProfile = async (updates: any) => {
+    try {
+      if (!user) throw new Error('Not authenticated');
+      
+      const { error } = await supabase
+        .from('profiles')
+        .update(updates)
+        .eq('id', user.id);
+        
+      if (error) throw error;
+      
+      // Update local state
+      setProfile({ ...profile, ...updates });
+      toast.success('Profile updated successfully');
+      
+      return { error: null };
+    } catch (error: any) {
+      toast.error(error.message || 'Error updating profile');
+      return { error };
+    }
+  };
+
   return {
     user,
     session,
+    profile,
     loading,
-    signOut
+    signOut,
+    updateProfile
   };
 };

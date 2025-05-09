@@ -66,19 +66,22 @@ const Login: React.FC = () => {
         // Continue even if this fails
       }
       
+      console.log("Logging in with:", data.email);
       const { error } = await supabase.auth.signInWithPassword({
         email: data.email,
         password: data.password,
       });
 
       if (error) {
+        console.error("Login error:", error);
         throw error;
       }
 
       toast.success("Login successful!");
-      // Force page reload
+      // Force page reload for a clean state
       window.location.href = '/';
     } catch (error: any) {
+      console.error("Error details:", error);
       toast.error(error.message || "Failed to log in.");
     } finally {
       setIsLoading(false);
