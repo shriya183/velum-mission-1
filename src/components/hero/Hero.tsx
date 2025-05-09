@@ -1,7 +1,7 @@
+
 import React from "react";
 import { Link } from "react-router-dom";
 import HeroFeature from "./HeroFeature";
-import Logo from "../Logo";
 
 const Hero: React.FC = () => {
   return (
@@ -11,12 +11,7 @@ const Hero: React.FC = () => {
     >
       <div className="flex w-full flex-col items-stretch max-md:max-w-full">
         <header className="flex w-full items-center gap-[40px_100px] text-[28px] text-white font-normal whitespace-nowrap justify-between flex-wrap max-md:max-w-full">
-          <div className="self-stretch flex items-center gap-[9px] my-auto">
-            <Logo />
-            <div className="self-stretch w-[91px] my-auto rounded-[0px_0px_0px_0px]">
-              Velum
-            </div>
-          </div>
+          {/* Logo and name removed from here as it's now in the Header component */}
         </header>
 
         <div className="self-center flex gap-[138px] flex-wrap mt-[106px] max-md:max-w-full max-md:mt-10">
