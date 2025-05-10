@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { BeamsBackground } from "@/components/ui/beams-background";
 import Header from "@/components/header/Header";
@@ -7,36 +6,20 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { SendHorizontal, Plus, Search, Globe, XCircle } from "lucide-react";
 import { ThemeToggle } from "@/components/theme/ThemeToggle";
-
 const Dashboard: React.FC = () => {
   const [message, setMessage] = useState("");
-
   const handleMessageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setMessage(e.target.value);
   };
-
-  return (
-    <BeamsBackground intensity="medium" className="min-h-screen">
+  return <BeamsBackground intensity="medium" className="min-h-screen">
       <div className="flex h-screen overflow-hidden">
         {/* Sidebar */}
         <div className="w-80 bg-black/20 backdrop-blur-lg border-r border-white/10 flex flex-col h-screen">
           <div className="p-4 flex items-center">
             <div className="flex items-center space-x-2">
-              <svg
-                width="26"
-                height="26"
-                viewBox="0 0 26 26"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M13 0C5.82 0 0 5.82 0 13C0 20.18 5.82 26 13 26C20.18 26 26 20.18 26 13C26 5.82 20.18 0 13 0ZM13 23.4C7.254 23.4 2.6 18.746 2.6 13C2.6 7.254 7.254 2.6 13 2.6C18.746 2.6 23.4 7.254 23.4 13C23.4 18.746 18.746 23.4 13 23.4Z"
-                  fill="white"
-                />
-                <path
-                  d="M13 7.8C10.1669 7.8 7.8 10.1669 7.8 13C7.8 15.8331 10.1669 18.2 13 18.2C15.8331 18.2 18.2 15.8331 18.2 13C18.2 10.1669 15.8331 7.8 13 7.8Z"
-                  fill="white"
-                />
+              <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M13 0C5.82 0 0 5.82 0 13C0 20.18 5.82 26 13 26C20.18 26 26 20.18 26 13C26 5.82 20.18 0 13 0ZM13 23.4C7.254 23.4 2.6 18.746 2.6 13C2.6 7.254 7.254 2.6 13 2.6C18.746 2.6 23.4 7.254 23.4 13C23.4 18.746 18.746 23.4 13 23.4Z" fill="white" />
+                <path d="M13 7.8C10.1669 7.8 7.8 10.1669 7.8 13C7.8 15.8331 10.1669 18.2 13 18.2C15.8331 18.2 18.2 15.8331 18.2 13C18.2 10.1669 15.8331 7.8 13 7.8Z" fill="white" />
               </svg>
               <span className="font-bold text-xl text-white">Velum</span>
             </div>
@@ -52,10 +35,7 @@ const Dashboard: React.FC = () => {
             
             <div className="relative mt-3">
               <Search className="absolute left-2 top-2.5 h-4 w-4 text-gray-400" />
-              <Input 
-                placeholder="Search conversations..." 
-                className="pl-8 bg-black/30 border-white/10 text-white" 
-              />
+              <Input placeholder="Search conversations..." className="pl-8 bg-black/30 border-white/10 text-white" />
             </div>
           </div>
           
@@ -66,17 +46,10 @@ const Dashboard: React.FC = () => {
           <div className="flex-1 overflow-y-auto px-2">
             {/* Conversation List */}
             <div className="space-y-1">
-              {["Create Html Game Environment", "Apply To Leave For Emergency", "What Is UI UX Design?", 
-                "Create POS System", "What Is UX Audit?", "Create Chatbot GPT"].map((title, index) => (
-                <Button 
-                  key={index} 
-                  variant="ghost" 
-                  className="w-full justify-start text-gray-300 hover:text-white hover:bg-white/5 px-2 py-1.5 h-auto"
-                >
+              {["Create Html Game Environment", "Apply To Leave For Emergency", "What Is UI UX Design?", "Create POS System", "What Is UX Audit?", "Create Chatbot GPT"].map((title, index) => <Button key={index} variant="ghost" className="w-full justify-start text-gray-300 hover:text-white hover:bg-white/5 px-2 py-1.5 h-auto">
                   <span className="mr-2">💬</span>
                   <span className="truncate text-left">{title}</span>
-                </Button>
-              ))}
+                </Button>)}
             </div>
             
             <div className="mt-4 px-2">
@@ -84,16 +57,10 @@ const Dashboard: React.FC = () => {
             </div>
             
             <div className="space-y-1">
-              {["Crypto Lending App Name", "Operator Grammar Types"].map((title, index) => (
-                <Button 
-                  key={index} 
-                  variant="ghost" 
-                  className="w-full justify-start text-gray-300 hover:text-white hover:bg-white/5 px-2 py-1.5 h-auto"
-                >
+              {["Crypto Lending App Name", "Operator Grammar Types"].map((title, index) => <Button key={index} variant="ghost" className="w-full justify-start text-gray-300 hover:text-white hover:bg-white/5 px-2 py-1.5 h-auto">
                   <span className="mr-2">💬</span>
                   <span className="truncate text-left">{title}</span>
-                </Button>
-              ))}
+                </Button>)}
             </div>
           </div>
           
@@ -130,10 +97,8 @@ const Dashboard: React.FC = () => {
                         <Globe size={24} />
                       </div>
                       <div className="ml-4">
-                        <h3 className="font-semibold text-white">Explore</h3>
-                        <p className="text-sm text-gray-400">
-                          Learn how to use Velum for your needs
-                        </p>
+                        <h3 className="font-semibold text-white">Celebrate</h3>
+                        <p className="text-sm text-gray-400">Recognize your effort or achievement today.</p>
                       </div>
                     </div>
                   </CardContent>
@@ -153,7 +118,7 @@ const Dashboard: React.FC = () => {
                       </div>
                       <div className="col-span-1 border-l border-white/10 flex items-center justify-center">
                         <Button variant="ghost" className="h-full w-full text-gray-400">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-arrow-right"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
                         </Button>
                       </div>
                     </div>
@@ -165,13 +130,11 @@ const Dashboard: React.FC = () => {
                   <CardContent className="p-0">
                     <div className="p-4 flex items-start">
                       <div className="w-12 h-12 flex items-center justify-center rounded-md bg-black/30 text-white">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-zap"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-zap"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" /></svg>
                       </div>
                       <div className="ml-4">
-                        <h3 className="font-semibold text-white">Capabilities</h3>
-                        <p className="text-sm text-gray-400">
-                          How Velum is able to help you
-                        </p>
+                        <h3 className="font-semibold text-white">Warning</h3>
+                        <p className="text-sm text-gray-400">Reflect on a risk or blind spot coming up.</p>
                       </div>
                     </div>
                   </CardContent>
@@ -191,7 +154,7 @@ const Dashboard: React.FC = () => {
                       </div>
                       <div className="col-span-1 border-l border-white/10 flex items-center justify-center">
                         <Button variant="ghost" className="h-full w-full text-gray-400">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-arrow-right"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
                         </Button>
                       </div>
                     </div>
@@ -206,10 +169,8 @@ const Dashboard: React.FC = () => {
                         <XCircle size={24} />
                       </div>
                       <div className="ml-4">
-                        <h3 className="font-semibold text-white">Limitations</h3>
-                        <p className="text-sm text-gray-400">
-                          What Velum may struggle with
-                        </p>
+                        <h3 className="font-semibold text-white">Nudge</h3>
+                        <p className="text-sm text-gray-400">Suggest a micro next step for your journey.</p>
                       </div>
                     </div>
                   </CardContent>
@@ -229,7 +190,7 @@ const Dashboard: React.FC = () => {
                       </div>
                       <div className="col-span-1 border-l border-white/10 flex items-center justify-center">
                         <Button variant="ghost" className="h-full w-full text-gray-400">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-arrow-right"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
                         </Button>
                       </div>
                     </div>
@@ -243,16 +204,8 @@ const Dashboard: React.FC = () => {
           <div className="p-4 border-t border-white/10">
             <div className="max-w-3xl mx-auto">
               <div className="relative">
-                <Input 
-                  placeholder="What's in your mind?..." 
-                  className="pr-12 py-6 bg-black/30 border-white/10 text-white rounded-full"
-                  value={message}
-                  onChange={handleMessageChange}
-                />
-                <Button 
-                  size="icon" 
-                  className="absolute right-1 top-1 bottom-1 bg-[rgba(65,105,225,1)] hover:bg-[rgba(65,105,225,0.8)] rounded-full h-auto"
-                >
+                <Input placeholder="What's in your mind?..." className="pr-12 py-6 bg-black/30 border-white/10 text-white rounded-full" value={message} onChange={handleMessageChange} />
+                <Button size="icon" className="absolute right-1 top-1 bottom-1 bg-[rgba(65,105,225,1)] hover:bg-[rgba(65,105,225,0.8)] rounded-full h-auto">
                   <SendHorizontal className="h-5 w-5" />
                   <span className="sr-only">Send message</span>
                 </Button>
@@ -261,8 +214,6 @@ const Dashboard: React.FC = () => {
           </div>
         </div>
       </div>
-    </BeamsBackground>
-  );
+    </BeamsBackground>;
 };
-
 export default Dashboard;
