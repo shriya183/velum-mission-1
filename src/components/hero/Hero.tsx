@@ -21,7 +21,7 @@ const Hero: React.FC = () => {
                 id="hero-heading"
                 className="text-white text-7xl font-semibold leading-[90px] tracking-[-1.44px] max-md:max-w-full max-md:text-[40px] max-md:leading-[55px]"
               >
-                Reflect with the Future You
+                Reflect with the <br />Future You
               </h1>
               <p className="text-[rgba(139,139,139,1)] text-base font-medium leading-6 mt-5 max-md:max-w-full">
                 Uncover clarity, growth, and wisdom through thoughtful
