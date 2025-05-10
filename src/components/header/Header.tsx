@@ -5,7 +5,7 @@ import Logo from "@/components/Logo";
 
 const Header: React.FC = () => {
   return (
-    <header className="absolute top-0 left-0 right-0 z-50 py-4 px-6 flex justify-between items-center">
+    <header className="absolute top-32 left-32 right-0 z-50 py-4 px-6 flex justify-between items-center">
       <Link to="/" className="flex items-center space-x-2">
         <Logo />
         <span className="font-bold text-xl text-white">Velum</span>
